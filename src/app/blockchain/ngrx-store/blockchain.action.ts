@@ -9,19 +9,16 @@ export const DELETE_COIN = 'DELETE_COIN';
 export class AddCoins implements Action {
     readonly type = ADD_COIN;
     constructor(public payload: Blockchain) {
-        this.init();
-
-
-
+        // this.init();
     };
-    init() {
-        console.log('priyank')
-    }
+    // init() {
+    //     console.log('alpit')
+    // }
 }
 
 export class EditCoins implements Action {
     readonly type = ADD_COINS;
-    constructor(public payload: Blockchain[]) { };
+    constructor(public payload: Blockchain) { };
     // constructor(public payload: { data: Blockchain }) { };
 
 }

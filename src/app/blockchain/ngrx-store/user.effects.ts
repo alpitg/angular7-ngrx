@@ -1,19 +1,42 @@
-// import { Injectable } from "@angular/core";
-// import { Actions, Effect } from "@ngrx/effects";
-// import { Observable } from "rxjs";
-// // import { GET_TODOS, GET_TODOS_SUCCESS, GET_TODOS_ERROR } from "./app.module";
-// // import { TodosService } from "./todos.service";
+import { ClientService } from './../service/client.service';
+import { Observable, of } from '../../../../node_modules/rxjs';
+import { Injectable } from '@angular/core';
+import { Action } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { HttpClient } from '@angular/common/http';
 
-// @Injectable()
-// export class TodosEffects {
-//   constructor( private actions$ : Actions, 
-//                private todosService : any ) {
-//   }
+import * as actions from './blockchain.action';
 
-//   @Effect() getTodos$ = this.actions$
-//     .ofType('GET_TODOS')
-//     .switchMap(action =>
-//       this.todosService.getTodos()
-//            .map(todos => ({type: 'GET_TODOS_SUCCESS', payload: todos}))
-//            .catch(() => Observable.of({type: 'GET_TODOS_ERROR'})));
-// }
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/switchMap';
+import { AddCoins } from './blockchain.action';
+import { map, debounceTime, distinctUntilChanged, switchMap } from '../../../../node_modules/rxjs/operators';
+
+@Injectable()
+export class CurrencyEffects {
+
+    constructor(
+        private clientService: ClientService,
+        private actions$: Actions
+    ) { }
+
+    public fetch = (actions, role) => this.actions$.pipe(
+        ofType('DEFINE_TYPE'),
+        map(action => actions),
+        debounceTime(400),
+        distinctUntilChanged(),
+        switchMap(partialAddress => this.clientService
+            .getRates()
+            .pipe(
+                map(results => new AddCoins(results)),
+            //   catchError(error => of(new FindAddressesRejected(error)))
+        )
+        )
+    );
+
+
+
+    @Effect()
+    protected fetchEditors$ = this.fetch('Action', "Editors")
+
+}
