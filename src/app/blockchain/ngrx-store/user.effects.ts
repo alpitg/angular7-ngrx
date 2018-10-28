@@ -1,27 +1,19 @@
 import { ClientService } from './../service/client.service';
-import { Observable, of } from '../../../../node_modules/rxjs';
 import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { HttpClient } from '@angular/common/http';
-
-import * as actions from './blockchain.action';
-
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
-import { AddCoins } from './blockchain.action';
 import { map, debounceTime, distinctUntilChanged, switchMap } from '../../../../node_modules/rxjs/operators';
+import { AddCoins, ADD_COIN } from './blockchain.action';
 
 @Injectable()
-export class CurrencyEffects {
+export class UserEffects {
 
     constructor(
         private clientService: ClientService,
         private actions$: Actions
-    ) { }
+    ) { console.log('EVENT----')}
 
     public fetch = (actions, role) => this.actions$.pipe(
-        ofType('DEFINE_TYPE'),
+        ofType(actions),
         map(action => actions),
         debounceTime(400),
         distinctUntilChanged(),
@@ -29,6 +21,7 @@ export class CurrencyEffects {
             .getRates()
             .pipe(
                 map(results => new AddCoins(results)),
+                // map(results => results),
             //   catchError(error => of(new FindAddressesRejected(error)))
         )
         )
@@ -37,6 +30,6 @@ export class CurrencyEffects {
 
 
     @Effect()
-    protected fetchEditors$ = this.fetch('Action', "Editors")
+    protected fetchEditors$ = this.fetch(ADD_COIN, "Editors")
 
 }

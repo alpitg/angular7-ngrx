@@ -18,7 +18,7 @@ export class AddCoins implements Action {
 
 export class EditCoins implements Action {
     readonly type = ADD_COINS;
-    constructor(public payload: Blockchain) { };
+    constructor(public payload: Blockchain[]) { };
     // constructor(public payload: { data: Blockchain }) { };
 
 }

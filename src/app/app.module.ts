@@ -9,6 +9,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DisplayComponent } from './blockchain/display/display.component';
 import { reducers } from './blockchain/ngrx-store/app.state';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '../../node_modules/@ngrx/effects';
+import { UserEffects } from './blockchain/ngrx-store/user.effects';
+import { ClientService } from './blockchain/service/client.service';
+import { HttpClientModule } from '../../node_modules/@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,11 +22,13 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([UserEffects]),
     ReactiveFormsModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [] //exclude from prodection
   ],
-  providers: [],
+  providers: [ClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
