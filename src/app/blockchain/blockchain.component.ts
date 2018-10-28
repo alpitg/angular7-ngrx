@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from './ngrx-store/app.state';
 
+import * as actions from './ngrx-store/blockchain.action';
+
 @Component({
   selector: 'app-blockchain',
   templateUrl: './blockchain.component.html',
@@ -17,19 +19,23 @@ export class BlockchainComponent implements OnInit {
   }
   createForm() {
     this.angForm = this.fb.group({
-      name: ['', Validators.required ],
-      price: ['', Validators.required ]
-   });
+      name: ['', Validators.required],
+      price: ['', Validators.required]
+    });
   }
 
   addCoin(name, price) {
-    this.store.dispatch({
-      type: 'ADD_COIN',
-      payload: <Blockchain> {
-        name: name,
-        price: price
-      }
-    });
+
+    //Note: Best practice
+    this.store.dispatch(new actions.AddCoins({ name: name, price: price }));
+
+    // this.store.dispatch({
+    //   type: 'ADD_COIN',
+    //   payload: <Blockchain> {
+    //     name: name,
+    //     price: price
+    //   }
+    // });
   }
 
   ngOnInit() {

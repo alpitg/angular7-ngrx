@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { BlockchainComponent } from './blockchain/blockchain.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 import { DisplayComponent } from './blockchain/display/display.component';
-import { addCoinReducer } from './blockchain/ngrx-store/blockchain.reducer';
+import { reducers } from './blockchain/ngrx-store/app.state';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -16,8 +18,9 @@ import { addCoinReducer } from './blockchain/ngrx-store/blockchain.reducer';
   ],
   imports: [
     BrowserModule,
-    StoreModule.forRoot({blockchain: addCoinReducer}),
-    ReactiveFormsModule
+    StoreModule.forRoot(reducers),
+    ReactiveFormsModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [] //exclude from prodection
   ],
   providers: [],
   bootstrap: [AppComponent]
