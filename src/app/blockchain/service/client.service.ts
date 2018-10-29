@@ -9,7 +9,7 @@ export class ClientService {
         // console.log('http clirnt');
     }
 
-    public getData() {
+    public getData(): Observable<any> {
         console.log("API Request");
         return this.http.get<any>('https://jsonplaceholder.typicode.com/todos/1')
             .pipe(
@@ -21,14 +21,6 @@ export class ClientService {
             )
     }
 
-    getRates(): Observable<any> {
-        console.log('http clirnt');
-        return this.http.get<any>('34')
-            .pipe(
-                tap(heroes => console.log('fetched heroes')),
-            //   catchError("errorhandling common function")
-        );
-    }
 }
 
 // https://malcoded.com/posts/angular-ngrx-guide
