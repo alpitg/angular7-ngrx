@@ -1,14 +1,20 @@
 
 import { Blockchain } from '../../blockchain/blockchain.model';
 import * as blockchainActions from './blockchain.action';
+import { SpinnerAction } from './blockchain.action';
 
-// const initialState: Blockchain = {
-//     name: null,
-//     price: 0
-// }
+const initialState: Blockchain[] = [];
+
+export interface State {
+    show: boolean;
+}
+
+const initialState1: State = {
+    show: false
+};
 
 
-export function addCoinReducer(state: Blockchain[] = [], action: blockchainActions.blochainListAction) {
+export function addCoinReducer(state = initialState, action: blockchainActions.blochainListAction) {
     switch (action.type) {
         case blockchainActions.ADD_COIN:
             return [...state, action.payload];
@@ -51,21 +57,33 @@ export function coinReducer(state: Blockchain[] = [], action: blockchainActions.
     }
 }
 
+export function loaderReducer(state: State = initialState1, action: SpinnerAction) {
+    switch (action.type) {
+        case blockchainActions.SPINNER_HIDE:
+            return { ...state, show: false };
+        case blockchainActions.SPINNER_SHOW:
+            return { ...state, show: true };
+        default:
+            return state;
+    }
+}
+
+export const isShowing = (state: State) => state.show;
 
 
 //#region 
 
-export interface FeatureState {
-    receipt: State;
-}
+// export interface FeatureState {
+//     receipt: State;
+// }
 
-export interface State {
-    data: Blockchain[];
-}
+// export interface State {
+//     data: Blockchain[];
+// }
 
-const initialState: State = {
-    data: []
-}
+// const initialState: State = {
+//     data: []
+// }
 
 
 // export function addCoinReducer(state = initialState, action: blockchainActions.blochainListAction) {

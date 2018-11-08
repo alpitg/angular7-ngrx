@@ -13,6 +13,8 @@ import { EffectsModule } from '../../node_modules/@ngrx/effects';
 import { UserEffects } from './blockchain/ngrx-store/user.effects';
 import { ClientService } from './blockchain/service/client.service';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { HttpClientModule } from '../../node_modules/@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([UserEffects]),

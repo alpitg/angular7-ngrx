@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Blockchain } from '../blockchain.model';
-import { Store } from '@ngrx/store';
-import { AppState } from '../ngrx-store/app.state';
+import { Store, select } from '@ngrx/store';
+import { AppState, isSpinnerShowing } from '../ngrx-store/app.state';
 import * as actions from '../ngrx-store/blockchain.action';
 
 @Component({
@@ -13,8 +13,13 @@ import * as actions from '../ngrx-store/blockchain.action';
 export class DisplayComponent implements OnInit {
 
   coins: Observable<Blockchain[]>;
+  loading: Observable<{}>;
   constructor(private store: Store<AppState>) {
     this.coins = this.store.select(state => state.blockchain);
+    console.log(this.coins);
+    // this.loading = this.store.pipe(select(isSpinnerShowing));
+    // console.log(this.loading);
+
   }
 
   ngOnInit() {

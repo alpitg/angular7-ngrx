@@ -9,11 +9,7 @@ export const DELETE_COIN = 'DELETE_COIN';
 export class AddCoins implements Action {
     readonly type = ADD_COIN;
     constructor(public payload: Blockchain) {
-        // this.init();
     };
-    // init() {
-    //     console.log('alpit')
-    // }
 }
 
 export class EditCoins implements Action {
@@ -38,3 +34,18 @@ export class DeleteCoins implements Action {
 //type: it will only appeaar when you are defining type
 export type blochainListAction = AddCoins | EditCoins | UpdateCoins | DeleteCoins;
 export type blochainListActionTrial = DeleteCoins;
+
+
+//loader
+export const SPINNER_SHOW = "SPINNER_SHOW";
+export const SPINNER_HIDE = "SPINNER_HIDE";
+
+export class HideSpinner implements Action {
+    readonly type = SPINNER_HIDE;
+}
+
+export class ShowSpinner implements Action {
+    readonly type = SPINNER_SHOW;
+}
+
+export type SpinnerAction = ShowSpinner | HideSpinner;
